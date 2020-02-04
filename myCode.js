@@ -7,6 +7,9 @@ var startGame = 0;
 var ball = document.getElementById("ball");
 let container = document.getElementsByClassName("container")[0];
 
+
+
+
 function createHole() {
     for(i=2;i<(window.innerWidth/100);i++){
         let hole = document.createElement('div');
