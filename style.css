@@ -15,6 +15,7 @@
     border-radius: 50%;
     background: red;
     top: 4vw;
+    position: absolute;
     left: 4vw;;
 }
 
@@ -31,4 +32,7 @@
 .correctHole{
 background: lime;
 z-index: -1;
+}
+.prevHole{
+    background: rgb(157, 196, 157);
 }
