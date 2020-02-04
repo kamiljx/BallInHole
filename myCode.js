@@ -4,12 +4,26 @@ var speedY = 0;
 var posX = 30;
 var posY = 30;
 var startGame = 0;
+var startDate = []
+var endDate = [];
 var ball = document.getElementById("ball");
 let container = document.getElementsByClassName("container")[0];
+window.addEventListener('deviceorientation', position)
 
+function position(e){
+    console.log(e);
+    speedX = e.gamma/45;
+    speedY = e.beta/45;
+}
 
-
-
+function start(){                                               //Inicjacja startu
+    startGame=true;
+    createHole();                       // Tworzenie dołków
+    moveBall();
+    startDate = new Date().getTime();                      // poruszanie kulką
+    console.log("game Started!")
+    document.getElementById("start").hidden=true;
+}
 function createHole() {
     for(i=2;i<(window.innerWidth/100);i++){
         let hole = document.createElement('div');
@@ -30,7 +44,6 @@ function createHole() {
     randomGoodHole(1);
 }
  
-createHole();
  function randomGoodHole(i){                                 // Dodanie dobrej dziury
      let goodHole = Math.floor(Math.random()*holes.length);
      if(goodHole ==i&&i<holes.length){i++;}                  // uniknięcie pojawienia się dobrej dziury w tym samym miejscu
@@ -39,3 +52,39 @@ createHole();
      holes[goodHole].classList.add("correctHole")
  }                                                           
 
+ function moveBall(){                 // funkcja poruszania kulki
+    if(posX+speedX<window.innerWidth-50 && posX+speedX>0){  // ograniczenia kulki
+        posX+=speedX;
+        ball.style.left=posX+'px';        
+    }
+    if(posY+speedY<window.innerHeight-50 && posY+speedY>0){
+        posY+=speedY;
+        ball.style.top=posY+'px';        
+    }
+                                                    //Sprawdzanie kolizji z dziurami
+    for(i=0;i<holes.length;i++) {
+        if(posY<Math.floor(holes[i].style.top.slice(0,-2))+50&&posY>holes[i].style.top.slice(0,-2)){
+            if(posX>holes[i].style.left.slice(0,-2)&&posX<Math.floor(holes[i].style.left.slice(0,-2))+50){
+                if(holes[i].classList.contains("correctHole")){
+                    holes[i].classList.remove("correctHole");
+                    holes.forEach(e=>{if(e.classList.contains("prevHole")){
+                        e.classList.remove("prevHole");
+                        e.classList.add("hole");
+                    }})
+                    holes[i].classList.add("prevHole");
+                    
+                    randomGoodHole(i);
+                }
+                else if(holes[i].classList.contains("hole")){     // koniec gry
+                startGame=false;
+                endDate = new Date().getTime();
+                window.alert('Gratulację grałeś przez ' + (endDate - startDate)/1000 + 'sekund')
+                document.getElementById("restart").hidden=false;
+            }
+        }
+    }
+    };
+    if(startGame==true){
+        window.requestAnimationFrame(moveBall)
+    }
+}
