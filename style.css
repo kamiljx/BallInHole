@@ -1,0 +1,11 @@
+ #start{
+    position: absolute;
+    bottom: 20%;
+    left: 40%;
+    width: 20vw;
+    height: 15vw;
+    font-size: 3vw;
+    color: red;
+    border-radius: 35%;
+    
+}
