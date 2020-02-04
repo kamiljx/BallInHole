@@ -23,6 +23,23 @@ function start(){                                               //Inicjacja star
     startDate = new Date().getTime();                      // poruszanie kulką
     console.log("game Started!")
     document.getElementById("start").hidden=true;
+    //document.getElementById("restart").hidden=true;
+
+}
+function restart(){                                 // funkcja restartu gry 
+    startGame=true;
+    for(i=container.childElementCount;i>0;i--){     // usunięcie starych dołków
+        if(container.childNodes[i].nodeName=="DIV"){
+            if(container.childNodes[i].id!=="ball"){
+                container.removeChild(container.childNodes[i])
+            }
+        }
+    }
+    holes=[];
+    posX = 20, posY = 20;
+    createHole();                   //tworzenie dołków
+    moveBall();                  // poruszanie kulką
+    document.getElementById("reset").hidden=true;
 }
 function createHole() {
     for(i=2;i<(window.innerWidth/100);i++){
@@ -79,7 +96,7 @@ function createHole() {
                 startGame=false;
                 endDate = new Date().getTime();
                 window.alert('Gratulację grałeś przez ' + (endDate - startDate)/1000 + 'sekund')
-                document.getElementById("restart").hidden=false;
+                document.getElementById("reset").hidden=false;
             }
         }
     }
