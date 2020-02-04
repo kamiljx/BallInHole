@@ -7,5 +7,16 @@
     font-size: 3vw;
     color: red;
     border-radius: 35%;
-    
+
+}
+
+.hole{ 
+    width: 75px;
+    height: 75px;
+    border-radius: 50%;
+    z-index: -2;
+    position: absolute;
+}
+.hole{
+    background: black;
 }
